@@ -1,5 +1,4 @@
 {
-  // "rootDirectory": "ui",
   "crons": [
     {
       "path": "/api/cron/vaults/backfill-vault-depositor-records",

@@ -123,8 +123,10 @@ export const getMultipleOnChainVaultData = async (
   const vaultsOnChainDataLookup: VaultsOnChainDataLookup = {};
 
   // process each pair of data
+  console.log("vaultPubKeys", vaultPubKeys.toString());
   for (let i = 0; i < vaultPubKeys.length; i++) {
     const responseIndex = i * 3;
+    console.log("response", response);
     const vaultAccountBuffer = response[responseIndex]!.data;
     const userStatsBuffer = response[responseIndex + 1]!.data;
     const driftUserAccountBuffer = response[responseIndex + 2]!.data;

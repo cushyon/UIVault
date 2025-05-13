@@ -32,7 +32,7 @@ const NavLink = ({
 export const TopBar = () => {
   return (
     <div className="flex flex-row items-center justify-between w-full">
-      <span className="text-2xl font-bold">Vaults UI</span>
+      <span className="text-2xl font-bold">Cushion</span>
 
       <div className="flex flex-row items-center gap-4">
         {/** Whitelist wallets to display this, to hide this link from normal users */}

@@ -58,6 +58,8 @@
     --chart-5: 340 75% 55%;
     --positive-green: hsl(0 0% 100%);     /* lines + fill charts colors */
     --negative-red:   hsl(0 0% 100%);
+    /* --stroke-secondary: hsl(0 0% 35%);    /* grid   */
+    --container-border: hsl(0 0% 45%);    /* axes X / Y    */
   }
 }
 

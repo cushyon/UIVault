@@ -36,7 +36,7 @@ export const TopBar = () => {
 
       <div className="flex flex-row items-center gap-4">
         {/** Whitelist wallets to display this, to hide this link from normal users */}
-        <NavLink href={PAGES.vaultManagerHome}>Vault Manager</NavLink>
+        {/* <NavLink href={PAGES.vaultManagerHome}>Vault Manager</NavLink> */}
 
         <NavLink href="/vaults">Vaults</NavLink>
       </div>

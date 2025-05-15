@@ -25,7 +25,7 @@ export const VaultPerformance = (props: { uiVaultConfig: UiVaultConfig }) => {
         className="flex items-center justify-between w-full p-4 border rounded cursor-pointer border-container-border bg-container-bg group text-text-default"
         href={`https://app.drift.trade?authority=${props.uiVaultConfig.vaultPubkeyString}`}
       >
-        <span className="group-hover:opacity-80">View Vault</span>
+        <span className="group-hover:opacity-80">View Vault on Drift</span>
         <ArrowRight className="transition-transform -translate-x-2 group-hover:translate-x-0" />
       </Link>
     </div>

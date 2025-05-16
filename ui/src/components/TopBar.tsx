@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import ConnectButton from "./ConnectButton";
 import { usePathname } from "next/navigation";
 import { PAGES } from "@/constants/pages";
@@ -32,7 +33,16 @@ const NavLink = ({
 export const TopBar = () => {
   return (
     <div className="flex flex-row items-center justify-between w-full">
-      <span className="text-2xl font-bold">Cushion</span>
+      <Link href="/" aria-label="Cushion Home" className="flex items-center">
+        <Image
+          src="/logo_white.svg"
+          width={280}
+          height={80}
+          priority
+          alt="Cushion logo"
+        />
+      </Link>
+      {/* <span className="text-2xl font-bold">Cushion</span> */}
 
       <div className="flex flex-row items-center gap-4">
         {/** Whitelist wallets to display this, to hide this link from normal users */}

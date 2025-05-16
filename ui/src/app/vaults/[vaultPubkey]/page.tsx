@@ -31,7 +31,7 @@ export default function VaultPage(props: {
   const uiVaultConfig = getUiVaultConfig(vaultPubkey);
 
   const [activeTab, setActiveTab] = useState<ContentTab>(
-    CONTENT_TAB_OPTIONS[0].value,
+    CONTENT_TAB_OPTIONS[0].value
   );
 
   const {
@@ -48,7 +48,7 @@ export default function VaultPage(props: {
   return (
     <div>
       <h1 className="text-2xl font-bold">{uiVaultConfig?.name}</h1>
-      <p>Vault Pubkey: {vaultPubkey}</p>
+      {/* <p>Vault Pubkey: {vaultPubkey}</p> */}
       <p>Description: {uiVaultConfig?.description}</p>
 
       <div className="flex mt-4">

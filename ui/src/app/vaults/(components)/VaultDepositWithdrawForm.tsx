@@ -414,9 +414,9 @@ export const VaultDepositWithdrawForm = (
               <Typo.T5 className="text-text-label">Amount</Typo.T5>
 
               {isWalletConnected && (
-                <div className="flex items-center gap-1 bg-gray-200 rounded-sm">
+                <div className="flex items-center gap-1 bg-[#2a3142] rounded-sm">
                   {/* The maximum amount is after fees, while the final amount received may differ from the amount requested. */}
-                  <Typo.T5 className="flex items-center gap-1 px-1 rounded-sm cursor-pointer bg-button-secondary-bg text-text-secondary">
+                  <Typo.T5 className="flex items-center gap-1 px-1 rounded-sm cursor-pointer bg-button-secondary-bg text-text-secondary text-gray-200">
                     <span>Max:</span>
                     <span>
                       {maxAmount.prettyPrint()} {depositAssetConfig.symbol}

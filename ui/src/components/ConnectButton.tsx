@@ -21,7 +21,9 @@ export default function ConnectButton({ className }: { className?: string }) {
 
   return (
     <Button
-      className={twMerge("flex items-center gap-2")}
+      className={twMerge(
+        "flex items-center gap-2 text-white bg-[linear-gradient(90deg,#091BCD_0%,#123FFC_35%,#0B3FE8_64%,#4571F4_100%)]"
+      )}
       onClick={openConnectWalletModal}
     >
       {!authority && (

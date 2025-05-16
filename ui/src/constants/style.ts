@@ -192,3 +192,4 @@ export const SEMANTIC_CLASSES = {
 
 export const POSITIVE_GREEN_COLOR = "var(--positive-green)";
 export const NEGATIVE_RED_COLOR = "var(--negative-red)";
+export const CHART_AREA_NEUTRAL_COLOR = "var(--chart-area-neutral)";

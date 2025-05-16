@@ -29,6 +29,7 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --chart-area-neutral: 0 0% 0%; 
   }
 
   .dark {
@@ -56,10 +57,11 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
-    --positive-green: hsl(0 0% 100%);     /* lines + fill charts colors */
-    --negative-red:   hsl(0 0% 100%);
+    --positive-green: hsl(55 89% 51%);     /* lines + fill charts colors */
+    --negative-red:   hsl(55 89% 51%);
     /* --stroke-secondary: hsl(0 0% 35%);    /* grid   */
     --container-border: hsl(0 0% 45%);    /* axes X / Y    */
+    --chart-area-neutral: 0 0% 0%;
   }
 }
 

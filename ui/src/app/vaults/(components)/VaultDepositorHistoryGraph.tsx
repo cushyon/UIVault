@@ -33,6 +33,7 @@ import useAppStore from "@/stores/app/useAppStore";
 import { getUiVaultConfig } from "@/lib/utils";
 import { Vault, VaultDepositor } from "@drift-labs/vaults-sdk";
 import { SPOT_MARKETS_LOOKUP } from "@/constants/environment";
+import { CHART_AREA_NEUTRAL_COLOR } from "@/constants/style";
 
 export function getYDomain(minY: number, maxY: number) {
   if (minY >= 0) {
@@ -77,11 +78,13 @@ export const VaultDepositorHistoryGraph = (props: {
   } = props;
 
   const { vaultSnapshots, isVaultSnapshotsLoading } = useVaultSnapshotHistory(
-    props.vaultPubkey,
+    props.vaultPubkey
   );
 
-  const { vaultDepositorHistory, isVaultDepositorHistoryLoading } =
-    useVaultDepositorHistory(props.vaultPubkey);
+  const {
+    vaultDepositorHistory,
+    isVaultDepositorHistoryLoading,
+  } = useVaultDepositorHistory(props.vaultPubkey);
 
   const isLoading =
     isVaultSnapshotsLoading ||
@@ -95,21 +98,21 @@ export const VaultDepositorHistoryGraph = (props: {
 
   const minX = displayedData.reduce(
     (acc, curr) => Math.min(acc, curr.ts),
-    Infinity,
+    Infinity
   );
   const maxX = displayedData.reduce(
     (acc, curr) => Math.max(acc, curr.ts),
-    -Infinity,
+    -Infinity
   );
   const xDomain = [minX, maxX];
 
   const minY = displayedData.reduce(
     (acc, curr) => Math.min(acc, curr[dataKey]),
-    Infinity,
+    Infinity
   );
   const maxY = displayedData.reduce(
     (acc, curr) => Math.max(acc, curr[dataKey]),
-    -Infinity,
+    -Infinity
   );
   const yDomain = getYDomain(minY, maxY);
 
@@ -128,7 +131,7 @@ export const VaultDepositorHistoryGraph = (props: {
 
     const currentOraclePrice =
       getOraclePrice(
-        MarketId.createSpotMarket(props.depositAssetConfig.marketIndex),
+        MarketId.createSpotMarket(props.depositAssetConfig.marketIndex)
       )?.rawPriceData.price ?? ZERO;
 
     type ReconstructedVaultDepositorRecord = Pick<
@@ -141,8 +144,8 @@ export const VaultDepositorHistoryGraph = (props: {
       | "assetPrice"
     > & { netDeposits: string; netDepositsNotional: string };
 
-    const reconstructedVaultDepositorHistory: ReconstructedVaultDepositorRecord[] =
-      vaultDepositorHistory.reduce((acc, record, index) => {
+    const reconstructedVaultDepositorHistory: ReconstructedVaultDepositorRecord[] = vaultDepositorHistory.reduce(
+      (acc, record, index) => {
         // re-construct the netDeposits attribute, since this isn't stored in the database
         if (index === 0) {
           return acc.concat({
@@ -164,7 +167,7 @@ export const VaultDepositorHistoryGraph = (props: {
 
         const previousNetDepositBase = BigNum.from(
           previousRecord.netDeposits,
-          precisionExp,
+          precisionExp
         );
         const currentAmountBase = BigNum.from(record.amount, precisionExp);
         const currentNetDepositBase =
@@ -174,11 +177,11 @@ export const VaultDepositorHistoryGraph = (props: {
 
         const previousNetDepositNotional = BigNum.from(
           previousRecord.netDepositsNotional,
-          precisionExp,
+          precisionExp
         );
         const currentAmountNotional = BigNum.from(
           record.notionalValue,
-          precisionExp,
+          precisionExp
         );
         const currentNetDepositNotional =
           record.action === "deposit"
@@ -190,7 +193,9 @@ export const VaultDepositorHistoryGraph = (props: {
           netDeposits: currentNetDepositBase.toString(),
           netDepositsNotional: currentNetDepositNotional.toString(),
         });
-      }, [] as ReconstructedVaultDepositorRecord[]);
+      },
+      [] as ReconstructedVaultDepositorRecord[]
+    );
 
     // if no vault depositor's transaction and has vault shares, use his current vault shares as the constant throughout the history of the vault snapshots
     if (
@@ -199,7 +204,7 @@ export const VaultDepositorHistoryGraph = (props: {
     ) {
       const currentNetDepositsNotional = BigNum.from(
         vaultDepositorAccountData.netDeposits,
-        precisionExp,
+        precisionExp
       )
         .mul(currentOraclePrice)
         .shiftTo(PRICE_PRECISION_EXP);
@@ -234,8 +239,8 @@ export const VaultDepositorHistoryGraph = (props: {
         continue;
       }
 
-      const lastVaultDepositorTransactionBeforeVaultSnapshot =
-        reconstructedVaultDepositorHistory.reduce((acc, curr) => {
+      const lastVaultDepositorTransactionBeforeVaultSnapshot = reconstructedVaultDepositorHistory.reduce(
+        (acc, curr) => {
           // find the last vault depositor transaction before current snapshot's
           if (curr.ts > vaultSnapshot.ts) {
             return acc;
@@ -246,7 +251,9 @@ export const VaultDepositorHistoryGraph = (props: {
           } else {
             return acc;
           }
-        }, reconstructedVaultDepositorHistory[0]);
+        },
+        reconstructedVaultDepositorHistory[0]
+      );
 
       // this means vault depositor have not done first deposit yet
       if (
@@ -264,10 +271,10 @@ export const VaultDepositorHistoryGraph = (props: {
       // get snapshot user base pnl/balance
       const snapshotUserNetDeposits = BigNum.from(
         lastVaultDepositorTransactionBeforeVaultSnapshot.netDeposits,
-        precisionExp,
+        precisionExp
       );
       const snapshotUserShares = new BN(
-        lastVaultDepositorTransactionBeforeVaultSnapshot.vaultSharesAfter,
+        lastVaultDepositorTransactionBeforeVaultSnapshot.vaultSharesAfter
       );
 
       const snapshotVaultDepositorBaseBalance = getVaultDepositorBalance(
@@ -279,11 +286,11 @@ export const VaultDepositorHistoryGraph = (props: {
           profitShare: vaultAccountData?.profitShare ?? 0,
         },
         BigNum.from(vaultSnapshot.totalAccountBaseValue, precisionExp),
-        props.depositAssetConfig.precisionExp,
+        props.depositAssetConfig.precisionExp
       );
 
       const snapshotUserBasePnl = snapshotVaultDepositorBaseBalance.sub(
-        snapshotUserNetDeposits,
+        snapshotUserNetDeposits
       );
 
       // get snapshot user notional pnl
@@ -292,7 +299,7 @@ export const VaultDepositorHistoryGraph = (props: {
         .shiftTo(PRICE_PRECISION_EXP);
       const snapshotUserNetNotionalDeposits = BigNum.from(
         lastVaultDepositorTransactionBeforeVaultSnapshot.netDepositsNotional,
-        PRICE_PRECISION_EXP,
+        PRICE_PRECISION_EXP
       );
       const snapshotUserNotionalPnl = snapshotUserNotionalBalance
         .sub(snapshotUserNetNotionalDeposits)
@@ -311,10 +318,10 @@ export const VaultDepositorHistoryGraph = (props: {
       props.period === "7d"
         ? 7
         : props.period === "30d"
-          ? 30
-          : props.period === "90d"
-            ? 90
-            : 0;
+        ? 30
+        : props.period === "90d"
+        ? 90
+        : 0;
     const cutoffDate = dayjs().subtract(cutoffDays, "day");
 
     const periodData = vaultDepositorHistoryData.filter((snapshot) => {
@@ -329,11 +336,11 @@ export const VaultDepositorHistoryGraph = (props: {
         vaultAccountData,
         vaultTvlBase,
         precisionExp,
-        true,
+        true
       );
 
       const currentUserBasePnl = currentUserBaseBalance.sub(
-        BigNum.from(vaultDepositorAccountData.netDeposits, precisionExp),
+        BigNum.from(vaultDepositorAccountData.netDeposits, precisionExp)
       );
 
       // get current user notional pnl
@@ -341,13 +348,13 @@ export const VaultDepositorHistoryGraph = (props: {
         reconstructedVaultDepositorHistory[
           reconstructedVaultDepositorHistory.length - 1
         ].netDepositsNotional,
-        PRICE_PRECISION_EXP,
+        PRICE_PRECISION_EXP
       );
       const currentUserNotionalBalance = currentUserBaseBalance
         .mul(currentOraclePrice)
         .shiftTo(PRICE_PRECISION_EXP);
       const currentUserNotionalPnl = currentUserNotionalBalance.sub(
-        currentUserNetDepositsNotional,
+        currentUserNetDepositsNotional
       );
 
       const currentUserSnapshot = {
@@ -398,10 +405,18 @@ export const VaultDepositorHistoryGraph = (props: {
               x2="0"
               y2="1"
             >
-              {getAreaStops(minY, maxY, {
-                startOpacity: 0.6,
-                endOpacity: 0.2,
-              })}
+              {getAreaStops(
+                minY,
+                maxY,
+                {
+                  startOpacity: 0.6,
+                  endOpacity: 0.2,
+                },
+                {
+                  topColor: CHART_AREA_NEUTRAL_COLOR,
+                  bottomColor: CHART_AREA_NEUTRAL_COLOR,
+                }
+              )}
             </linearGradient>
           </defs>
           <Area

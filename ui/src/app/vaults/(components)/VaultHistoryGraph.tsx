@@ -31,6 +31,7 @@ import { VAULT_SHARES_PRECISION_EXP } from "@drift-labs/vaults-sdk";
 import { SPOT_MARKETS_LOOKUP } from "@/constants/environment";
 import { getUiVaultConfig } from "@/lib/utils";
 import useAppStore from "@/stores/app/useAppStore";
+import { CHART_AREA_NEUTRAL_COLOR } from "@/constants/style";
 
 const CUSTOM_LINE_COLORS_ID = "custom-line-colors_vault-graph";
 const CUSTOM_AREA_COLORS_ID = "custom-area-colors_vault-graph";
@@ -48,14 +49,14 @@ export const VaultHistoryGraph = (props: {
     props.graphType === "pnl"
       ? "pnl"
       : props.graphType === "balance"
-        ? "baseBalance"
-        : "sharePrice";
+      ? "baseBalance"
+      : "sharePrice";
   const isUsdcAsset =
     props.depositAssetMarketIndex === 0 ||
     (props.graphType === "pnl" && uiVaultConfig?.isNotionalGrowthStrategy);
 
   const { vaultSnapshots, isVaultSnapshotsLoading } = useVaultSnapshotHistory(
-    props.vaultPubkey,
+    props.vaultPubkey
   );
   const vaultStat = useAppStore((s) => s.vaultsStats[props.vaultPubkey]);
   const vaultClient = useAppStore((s) => s.vaultClient);
@@ -74,21 +75,21 @@ export const VaultHistoryGraph = (props: {
 
   const minX = displayedData.reduce(
     (acc, curr) => Math.min(acc, curr.ts),
-    Infinity,
+    Infinity
   );
   const maxX = displayedData.reduce(
     (acc, curr) => Math.max(acc, curr.ts),
-    -Infinity,
+    -Infinity
   );
   const xDomain = [minX, maxX];
 
   const minY = displayedData.reduce(
     (acc, curr) => Math.min(acc, curr[dataKey]),
-    Infinity,
+    Infinity
   );
   const maxY = displayedData.reduce(
     (acc, curr) => Math.max(acc, curr[dataKey]),
-    -Infinity,
+    -Infinity
   );
   const yDomain = getYDomain(minY, maxY);
 
@@ -100,10 +101,10 @@ export const VaultHistoryGraph = (props: {
       props.period === "7d"
         ? 7
         : props.period === "30d"
-          ? 30
-          : props.period === "90d"
-            ? 90
-            : 0;
+        ? 30
+        : props.period === "90d"
+        ? 90
+        : 0;
     const cutoffDate = dayjs().subtract(cutoffDays, "day").subtract(1, "day"); // subtract 1 day to include starting point of APY calculation (e.g. 7d period should include from previous Sunday to current Sunday)
     const periodData = vaultSnapshots.filter((snapshot) => {
       return dayjs.unix(+snapshot.ts).isAfter(cutoffDate);
@@ -112,16 +113,16 @@ export const VaultHistoryGraph = (props: {
     const periodSnapshots = periodData.map((snapshot) => {
       const basePnl = BigNum.from(
         snapshot.totalAccountBaseValue,
-        precisionExp,
+        precisionExp
       ).sub(BigNum.from(snapshot.netDeposits, precisionExp));
 
       const netQuoteDeposits = BigNum.from(
         snapshot.netQuoteDeposits ?? ZERO,
-        QUOTE_PRECISION_EXP,
+        QUOTE_PRECISION_EXP
       );
       const quoteTvl = BigNum.from(
         snapshot.totalAccountQuoteValue,
-        QUOTE_PRECISION_EXP,
+        QUOTE_PRECISION_EXP
       );
       const notionalPnl = quoteTvl.sub(netQuoteDeposits);
 
@@ -131,7 +132,7 @@ export const VaultHistoryGraph = (props: {
 
       const sharePrice = BigNum.from(
         snapshot.totalAccountBaseValue,
-        precisionExp,
+        precisionExp
       )
         .shift(VAULT_SHARES_PRECISION_EXP)
         .div(BigNum.from(snapshot.totalShares, VAULT_SHARES_PRECISION_EXP))
@@ -142,7 +143,7 @@ export const VaultHistoryGraph = (props: {
         pnl: pnl.toNum(),
         baseBalance: BigNum.from(
           snapshot.totalAccountBaseValue,
-          precisionExp,
+          precisionExp
         ).toNum(),
         sharePrice,
       };
@@ -151,13 +152,13 @@ export const VaultHistoryGraph = (props: {
     // add current live data point to graph
     if (vaultStat) {
       const vaultUser = await vaultClient.getSubscribedVaultUser(
-        new PublicKey(uiVaultConfig.userPubKeyString),
+        new PublicKey(uiVaultConfig.userPubKeyString)
       );
       const vaultNetQuoteDeposits = vaultUser
         .getUserAccount()
         .totalDeposits.sub(vaultUser.getUserAccount().totalWithdraws);
       const currentNotionalPnl = vaultStat.tvlQuote.sub(
-        BigNum.from(vaultNetQuoteDeposits, QUOTE_PRECISION_EXP),
+        BigNum.from(vaultNetQuoteDeposits, QUOTE_PRECISION_EXP)
       );
 
       const pnl = uiVaultConfig.isNotionalGrowthStrategy
@@ -220,10 +221,18 @@ export const VaultHistoryGraph = (props: {
               x2="0"
               y2="1"
             >
-              {getAreaStops(minY, maxY, {
-                startOpacity: 0.6,
-                endOpacity: 0.2,
-              })}
+              {getAreaStops(
+                minY,
+                maxY,
+                {
+                  startOpacity: 0.6,
+                  endOpacity: 0.2,
+                },
+                {
+                  topColor: CHART_AREA_NEUTRAL_COLOR,
+                  bottomColor: CHART_AREA_NEUTRAL_COLOR,
+                }
+              )}
             </linearGradient>
           </defs>
           <Area
@@ -252,7 +261,7 @@ export const VaultHistoryGraph = (props: {
             domain={yDomain}
             tickFormatter={(tick: number) =>
               `${tick < 0 ? "-" : ""}${isUsdcAsset ? "$" : ""}${BigNum.from(
-                tick,
+                tick
               )
                 .abs()
                 .toMillified()}`

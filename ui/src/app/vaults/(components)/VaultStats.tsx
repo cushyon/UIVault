@@ -11,7 +11,7 @@ export const VaultStats = (props: {
   const vaultStats = useAppStore((s) => s.vaultsStats[props.vaultPubkey]);
   const isLoadingVaultStats = !vaultStats?.hasLoadedOnChainStats;
   const depositAssetConfig = UIMarket.createSpotMarket(
-    props.depositAssetMarketIndex,
+    props.depositAssetMarketIndex
   ).market;
 
   const apy = vaultStats?.apys[DEFAULT_PERIOD_APY] ?? 0;
@@ -21,7 +21,7 @@ export const VaultStats = (props: {
       label: "APY",
       value: `${apy?.toFixed(2)}%`,
       valueClassName: twMerge(
-        apy < 0 ? "text-negative-red" : "text-positive-green",
+        apy < 0 ? "text-negative-red" : "text-positive-green"
       ),
       loading: isLoadingVaultStats,
     },
@@ -31,13 +31,13 @@ export const VaultStats = (props: {
       marketSymbol: depositAssetConfig.symbol,
       loading: isLoadingVaultStats,
     },
-    {
-      label: "Capacity",
-      value: vaultStats?.isUncappedCapacity
-        ? "Uncapped"
-        : `${vaultStats?.capacityPct.toFixed(2)}%`,
-      loading: isLoadingVaultStats,
-    },
+    // {
+    //   label: "Capacity",
+    //   value: vaultStats?.isUncappedCapacity
+    //     ? "Uncapped"
+    //     : `${vaultStats?.capacityPct.toFixed(2)}%`,
+    //   loading: isLoadingVaultStats,
+    // },
   ];
 
   return <VaultStatsSkeleton stats={stats} />;

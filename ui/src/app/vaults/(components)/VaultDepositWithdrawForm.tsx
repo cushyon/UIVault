@@ -358,11 +358,11 @@ export const VaultDepositWithdrawForm = (
 
   return (
     <div className="flex flex-col w-full p-4 rounded-[3px] bg-container-bg grow sm:grow-0 max-w-[400px] border ">
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 ">
         <Button
           onClick={() => setFormType("deposit")}
           className={twMerge(
-            "flex-1",
+            "flex-1 rounded-full",
             formType !== "deposit" && "text-white bg-transparent"
           )}
         >
@@ -371,7 +371,7 @@ export const VaultDepositWithdrawForm = (
         <Button
           onClick={() => setFormType("withdraw")}
           className={twMerge(
-            "flex-1",
+            "flex-1 rounded-full",
             formType !== "withdraw" && "text-white bg-transparent"
           )}
         >
@@ -478,7 +478,7 @@ export const VaultDepositWithdrawForm = (
       {isWalletConnected ? (
         <Button
           className={twMerge(
-            "w-full normal-case",
+            "w-full normal-case rounded-full",
             !isDeposit && withdrawalCtaState.className
           )}
           onClick={handleOnSubmit}

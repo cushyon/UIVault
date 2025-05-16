@@ -29,11 +29,13 @@ const UserPerformanceBreakdownStats = (props: {
 }) => {
   const vaultStats = useAppStore((s) => s.vaultsStats[props.vaultPubkey]);
   const { vaultSnapshots, isVaultSnapshotsLoading } = useVaultSnapshotHistory(
-    props.vaultPubkey,
+    props.vaultPubkey
   );
   const uiVaultConfig = getUiVaultConfig(props.vaultPubkey);
-  const { vaultDepositorHistory, isVaultDepositorHistoryLoading } =
-    useVaultDepositorHistory(props.vaultPubkey);
+  const {
+    vaultDepositorHistory,
+    isVaultDepositorHistoryLoading,
+  } = useVaultDepositorHistory(props.vaultPubkey);
   const {
     vaultAccountData,
     isVaultDepositorLoaded,
@@ -52,23 +54,23 @@ const UserPerformanceBreakdownStats = (props: {
 
   const cumulativeNetDeposits = BigNum.from(
     vaultDepositorAccountData?.netDeposits ?? 0,
-    precisionExp,
+    precisionExp
   );
   const userVaultSharesPct = getUserVaultSharesPct();
   const feesPaid = BigNum.from(
     vaultDepositorAccountData?.profitShareFeePaid ?? 0,
-    precisionExp,
+    precisionExp
   );
   const highWaterMark = BigNum.from(
     vaultDepositorAccountData?.cumulativeProfitShareAmount ?? 0,
-    precisionExp,
+    precisionExp
   );
   const highWaterMarkWithCurrentDeposit = highWaterMark
     .add(
-      BigNum.from(vaultDepositorAccountData?.totalDeposits ?? 0, precisionExp),
+      BigNum.from(vaultDepositorAccountData?.totalDeposits ?? 0, precisionExp)
     )
     .sub(
-      BigNum.from(vaultDepositorAccountData?.totalWithdraws ?? 0, precisionExp),
+      BigNum.from(vaultDepositorAccountData?.totalWithdraws ?? 0, precisionExp)
     );
   const maxDailyDrawdownPct = getMaxDailyDrawdownPct();
 
@@ -88,7 +90,7 @@ const UserPerformanceBreakdownStats = (props: {
       .div(vaultShares);
 
     return BigNum.from(userVaultSharesPct, PERCENTAGE_PRECISION_EXP).mul(
-      HUNDRED,
+      HUNDRED
     );
   }
 
@@ -110,7 +112,7 @@ const UserPerformanceBreakdownStats = (props: {
       relevantVaultSnapshots,
       uiVaultConfig?.isNotionalGrowthStrategy
         ? "totalAccountQuoteValue"
-        : "totalAccountBaseValue",
+        : "totalAccountBaseValue"
     );
 
     return maxDailyDrawdown * 100;
@@ -200,7 +202,7 @@ export const VaultDepositorPerformanceBreakdown = (props: {
         vaultDepositorAccountData.netDeposits.eqn(0)));
 
   return (
-    <div className="flex flex-col w-screen p-4 -mx-4 border sm:rounded sm:w-full sm:mx-0 bg-container-bg border-container-border sm:border">
+    <div className="flex flex-col w-screen p-4 -mx-4 sm:rounded sm:w-full sm:mx-0 bg-container-bg">
       <Typo.T3>Performance Breakdown</Typo.T3>
       <UserPerformanceBreakdownStats
         depositAssetConfig={props.depositAssetConfig}

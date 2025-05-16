@@ -15,7 +15,7 @@ const PerformanceBreakdownStats = (props: {
   vaultPubkey: string;
   marketSymbol: string;
 }) => {
-const vaultStats = useAppStore((s) => s.vaultsStats[props.vaultPubkey]);
+  const vaultStats = useAppStore((s) => s.vaultsStats[props.vaultPubkey]);
   const isVaultStatsLoading = !vaultStats?.hasLoadedOnChainStats;
   const uiVaultConfig = getUiVaultConfig(props.vaultPubkey);
   const vaultClient = useAppStore((s) => s.vaultClient);
@@ -32,7 +32,7 @@ const vaultStats = useAppStore((s) => s.vaultsStats[props.vaultPubkey]);
               .getUserAccount()
               .totalDeposits.sub(vaultUser.getUserAccount().totalWithdraws);
             const currentNotionalPnl = vaultStats.tvlQuote.sub(
-              BigNum.from(vaultNetQuoteDeposits, QUOTE_PRECISION_EXP),
+              BigNum.from(vaultNetQuoteDeposits, QUOTE_PRECISION_EXP)
             );
 
             setTotalPnl(currentNotionalPnl);
@@ -112,7 +112,7 @@ export const VaultPerformanceBreakdown = (props: {
     : UIMarket.createSpotMarket(props.depositAssetMarketIndex).market.symbol;
 
   return (
-    <div className="flex flex-col w-screen p-4 -mx-4 sm:w-full sm:rounded sm:mx-0 bg-container-bg border-container-border border-y sm:border">
+    <div className="flex flex-col w-screen p-4 -mx-4 sm:w-full sm:rounded sm:mx-0 bg-container-bg">
       <Typo.T3>Performance Breakdown</Typo.T3>
       <PerformanceBreakdownStats
         vaultPubkey={props.vaultPubkey}

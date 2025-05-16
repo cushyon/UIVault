@@ -36,7 +36,7 @@ const VaultStat = (props: VaultStatProps) => {
 
 export const VaultStatsSkeleton = (props: { stats: VaultStatProps[] }) => {
   return (
-    <div className="grid w-full grid-cols-2 gap-4 p-4 border rounded sm:divide-x sm:flex border-container-border divide-container-border bg-container-bg sm:gap-0">
+    <div className="grid w-full grid-cols-2 gap-4 p-4 rounded sm:divide-x sm:flex border-container-border divide-container-border bg-container-bg sm:gap-0">
       {props.stats.map((stat) => {
         return <VaultStat key={stat.label} {...stat} />;
       })}

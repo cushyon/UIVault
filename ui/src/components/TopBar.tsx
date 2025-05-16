@@ -33,7 +33,11 @@ const NavLink = ({
 export const TopBar = () => {
   return (
     <div className="flex flex-row items-center justify-between w-full">
-      <Link href="/" aria-label="Cushion Home" className="flex items-center">
+      <Link
+        href="/vaults"
+        aria-label="Cushion Home"
+        className="flex items-center"
+      >
         <Image
           src="/logo_white.svg"
           width={280}
@@ -48,7 +52,7 @@ export const TopBar = () => {
         {/** Whitelist wallets to display this, to hide this link from normal users */}
         {/* <NavLink href={PAGES.vaultManagerHome}>Vault Manager</NavLink> */}
 
-        <NavLink href="/vaults">Vaults</NavLink>
+        {/* <NavLink href="/vaults">Vaults</NavLink> */}
       </div>
 
       <ConnectButton />

@@ -40,12 +40,12 @@ type VaultDepositWithdrawFormProps = {
 };
 
 export const VaultDepositWithdrawForm = (
-  props: VaultDepositWithdrawFormProps,
+  props: VaultDepositWithdrawFormProps
 ) => {
   const depositAssetConfig = props.uiVaultConfig.market;
 
   const vaultStats = useAppStore(
-    (s) => s.vaultsStats[props.uiVaultConfig.vaultPubkeyString],
+    (s) => s.vaultsStats[props.uiVaultConfig.vaultPubkeyString]
   );
   const vaultClient = useAppStore((s) => s.vaultClient);
   const driftClient = useCommonDriftStore((s) => s.driftClient.client);
@@ -61,17 +61,15 @@ export const VaultDepositWithdrawForm = (
   const redemptionPeriod = props.vaultAccountData?.redeemPeriod;
 
   const currentUserVaultBaseBalanceAfterFees = getCurrentUserVaultBalance();
-  const afterInputAmountUserVaultBalance =
-    getAfterInputAmountUserVaultBalance();
+  const afterInputAmountUserVaultBalance = getAfterInputAmountUserVaultBalance();
   const maxAmount = getMaxAmount();
   const { withdrawalState } = getWithdrawalState(
     props.vaultDepositorAccountData,
-    props.vaultAccountData,
+    props.vaultAccountData
   );
 
   const isVaultDepositorWhitelisted = getIsVaultDepositorWhitelisted();
-  const isInputAmountLessThanMinDepositAmount =
-    getIsInputAmountLessThanMinDepositAmount();
+  const isInputAmountLessThanMinDepositAmount = getIsInputAmountLessThanMinDepositAmount();
   const isCtaDisabled = getIsCtaDisabled();
   const withdrawalCtaState = getWithdrawalFormState();
   const withdrawalBaseAmount = getWithdrawalBaseAmount();
@@ -84,7 +82,7 @@ export const VaultDepositWithdrawForm = (
       !isNaN(+inputAmount) &&
       +inputAmount > 0 &&
       BigNum.fromPrint(inputAmount, depositAssetConfig.precisionExp).val.lt(
-        props.vaultAccountData.minDepositAmount,
+        props.vaultAccountData.minDepositAmount
       )
     );
   }
@@ -113,7 +111,7 @@ export const VaultDepositWithdrawForm = (
       props.vaultAccountData,
       vaultStats.tvlBase,
       depositAssetConfig.precisionExp,
-      true,
+      true
     );
   }
 
@@ -129,15 +127,15 @@ export const VaultDepositWithdrawForm = (
 
       const capacityLeftover = BN.max(
         bufferedCapacity.sub(vaultStats.tvlBase.val),
-        ZERO,
+        ZERO
       );
 
       const maxAmount = BN.min(
         capacityLeftover,
         BigNum.fromPrint(
           depositAssetWalletBalance.toString(),
-          depositAssetConfig.precisionExp,
-        ).val,
+          depositAssetConfig.precisionExp
+        ).val
       );
       const safeMaxAmount = BN.max(maxAmount, ZERO);
 
@@ -150,7 +148,7 @@ export const VaultDepositWithdrawForm = (
   function getAfterInputAmountUserVaultBalance() {
     const inputAmountBigNum = BigNum.fromPrint(
       inputAmount,
-      depositAssetConfig.precisionExp,
+      depositAssetConfig.precisionExp
     );
 
     if (isDeposit) {
@@ -201,18 +199,17 @@ export const VaultDepositWithdrawForm = (
       }
 
       const totalShares = props.vaultAccountData.totalShares;
-      const currentBaseValueOfRequest =
-        props.vaultDepositorAccountData.lastWithdrawRequest.shares
-          .mul(vaultStats.tvlBase.val)
-          .div(totalShares);
+      const currentBaseValueOfRequest = props.vaultDepositorAccountData.lastWithdrawRequest.shares
+        .mul(vaultStats.tvlBase.val)
+        .div(totalShares);
 
       const baseValueOfWithdrawalAtRequestTime = new BN(
-        props.vaultDepositorAccountData.lastWithdrawRequest.value,
+        props.vaultDepositorAccountData.lastWithdrawRequest.value
       );
 
       const smallerValue = BN.min(
         baseValueOfWithdrawalAtRequestTime,
-        currentBaseValueOfRequest,
+        currentBaseValueOfRequest
       );
 
       return BigNum.from(smallerValue, depositAssetConfig.precisionExp);
@@ -272,7 +269,7 @@ export const VaultDepositWithdrawForm = (
         return {
           message: `The minimum deposit amount is ${BigNum.from(
             props.vaultAccountData.minDepositAmount,
-            depositAssetConfig.precisionExp,
+            depositAssetConfig.precisionExp
           ).prettyPrint()} ${depositAssetConfig.symbol}`,
         };
       }
@@ -282,7 +279,7 @@ export const VaultDepositWithdrawForm = (
           message: `${withdrawalBaseAmount.prettyPrint()} ${
             depositAssetConfig.symbol
           } is available to withdraw in ${redeemPeriodToString(
-            tsUntilWithdrawal,
+            tsUntilWithdrawal
           )}.`,
         };
       } else if (withdrawalState === WithdrawalState.AvailableForWithdrawal) {
@@ -299,7 +296,7 @@ export const VaultDepositWithdrawForm = (
 
   const handleOnValueChange = COMMON_UI_UTILS.formatTokenInputCurried(
     setInputAmount,
-    depositAssetConfig,
+    depositAssetConfig
   );
 
   const handleOnSubmit = async () => {
@@ -314,7 +311,7 @@ export const VaultDepositWithdrawForm = (
           props.vaultAccountData,
           vaultClient,
           BigNum.fromPrint(inputAmount, depositAssetConfig.precisionExp).val,
-          props.vaultDepositorAccountData,
+          props.vaultDepositorAccountData
         );
       } else {
         if (!props.vaultDepositorAccountData) return;
@@ -322,10 +319,10 @@ export const VaultDepositWithdrawForm = (
         if (withdrawalState === WithdrawalState.UnRequested) {
           const inputAmountBN = BigNum.fromPrint(
             inputAmount,
-            depositAssetConfig.precisionExp,
+            depositAssetConfig.precisionExp
           );
           const isMaxWithdrawal = inputAmountBN.eq(
-            currentUserVaultBaseBalanceAfterFees,
+            currentUserVaultBaseBalanceAfterFees
           );
           const pctOfSharesToWithdraw = isMaxWithdrawal
             ? PERCENTAGE_PRECISION
@@ -336,12 +333,12 @@ export const VaultDepositWithdrawForm = (
           await requestVaultWithdrawal(
             props.vaultDepositorAccountData.pubkey,
             pctOfSharesToWithdraw,
-            vaultClient,
+            vaultClient
           );
         } else if (withdrawalState === WithdrawalState.Requested) {
           await cancelVaultWithdrawalRequest(
             props.vaultDepositorAccountData.pubkey,
-            vaultClient,
+            vaultClient
           );
         } else {
           await withdrawFromVault(props.vaultDepositorAccountData, vaultClient);
@@ -366,7 +363,7 @@ export const VaultDepositWithdrawForm = (
           onClick={() => setFormType("deposit")}
           className={twMerge(
             "flex-1",
-            formType !== "deposit" && "text-black bg-transparent",
+            formType !== "deposit" && "text-white bg-transparent"
           )}
         >
           Deposit
@@ -375,7 +372,7 @@ export const VaultDepositWithdrawForm = (
           onClick={() => setFormType("withdraw")}
           className={twMerge(
             "flex-1",
-            formType !== "withdraw" && "text-black bg-transparent",
+            formType !== "withdraw" && "text-white bg-transparent"
           )}
         >
           Withdraw
@@ -482,7 +479,7 @@ export const VaultDepositWithdrawForm = (
         <Button
           className={twMerge(
             "w-full normal-case",
-            !isDeposit && withdrawalCtaState.className,
+            !isDeposit && withdrawalCtaState.className
           )}
           onClick={handleOnSubmit}
           disabled={isCtaDisabled}

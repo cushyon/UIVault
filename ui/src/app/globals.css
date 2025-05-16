@@ -61,7 +61,7 @@
     --negative-red:   hsl(55 89% 51%);
     /* --stroke-secondary: hsl(0 0% 35%);    /* grid   */
     --container-border: hsl(0 0% 45%);    /* axes X / Y    */
-    --chart-area-neutral: 0 0% 0%;
+    --chart-area-neutral: 0 0% 0%; /* add additional variable to fill charts area with specific color */
   }
 }
 

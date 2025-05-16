@@ -482,7 +482,7 @@ export const VaultDepositWithdrawForm = (
       {isWalletConnected ? (
         <Button
           className={twMerge(
-            "w-full normal-case rounded-full",
+            "w-full normal-case rounded-full text-white bg-[linear-gradient(90deg,#091BCD_0%,#123FFC_35%,#0B3FE8_64%,#4571F4_100%)]",
             !isDeposit && withdrawalCtaState.className
           )}
           onClick={handleOnSubmit}

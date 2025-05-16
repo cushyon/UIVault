@@ -121,7 +121,7 @@ export const VaultPerformanceBreakdown = (props: {
       <div className="flex flex-wrap items-center justify-between gap-2 mt-5">
         <ToggleGroup
           type="single"
-          className="bg-gray-300 rounded"
+          className="bg-container-bg rounded"
           value={selectedGraph}
           onValueChange={(value) => {
             if (value) setSelectedGraph(value as GraphType);
@@ -135,7 +135,7 @@ export const VaultPerformanceBreakdown = (props: {
         </ToggleGroup>
         <ToggleGroup
           type="single"
-          className="bg-gray-300 rounded"
+          className="bg-container-bg rounded"
           value={selectedPeriod}
           onValueChange={(value) => {
             if (value) setSelectedPeriod(value as Period);

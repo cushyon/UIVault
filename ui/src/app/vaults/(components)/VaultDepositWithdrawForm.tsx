@@ -358,7 +358,7 @@ export const VaultDepositWithdrawForm = (
 
   return (
     <div className="flex flex-col w-full p-4 rounded-[3px] bg-container-bg grow sm:grow-0 max-w-[400px] border ">
-      <div className="flex items-center gap-1 ">
+      <div className="flex items-center gap-2 p-1 mb-2 bg-[#2a3142] rounded-full">
         <Button
           onClick={() => setFormType("deposit")}
           className={twMerge(

@@ -22,7 +22,7 @@ const SOLCPPI: UiVaultConfig = {
   managerPubkeyString: "CcfwPEzivuWSUYndGhL8XGw19s46fCaeB8e5nQBSzpEH",
   userPubKeyString: "2zSLRaFjF54daFxo1kciWYgtXcrNuKESPVhAaDuM5Qw4",
   description:
-    "A Defi strategy with 80% capital guarantee, invested in a risky asset (SOL) and USDC",
+    "A Defi strategy with 60% capital guarantee and profit lock-in, invested in a risky asset (SOL) and USDC",
   market: SPOT_MARKETS_LOOKUP[0],
   isNotionalGrowthStrategy: false,
 };

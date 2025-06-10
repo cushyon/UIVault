@@ -49,7 +49,7 @@ export default function VaultPage(props: {
     <div>
       <h1 className="text-2xl font-bold">{uiVaultConfig?.name}</h1>
       {/* <p>Vault Pubkey: {vaultPubkey}</p> */}
-      <p>Description: {uiVaultConfig?.description}</p>
+      <p>{uiVaultConfig?.description}</p>
 
       <div className="flex mt-4">
         <ToggleGroup

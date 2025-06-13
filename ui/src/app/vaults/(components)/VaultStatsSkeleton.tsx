@@ -3,7 +3,7 @@ import { Typo } from "@drift-labs/react";
 
 export type VaultStatProps = {
   label: string;
-  value: string | undefined;
+  value: React.ReactNode;
   valueClassName?: string;
   loading?: boolean;
   marketSymbol?: string;
@@ -22,7 +22,7 @@ const VaultStat = (props: VaultStatProps) => {
             {props.marketSymbol && (
               <MarketIcon
                 marketSymbol={props.marketSymbol}
-                className="w-6 h-6"
+                className="w-6 h-6 translate-y-[-2px]"
               />
             )}
             <Typo.T1 className={props.valueClassName}>{props.value}</Typo.T1>

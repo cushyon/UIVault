@@ -42,7 +42,7 @@ export default function VaultPage(props: {
   } = useVault(vaultPubkey);
 
   if (!uiVaultConfig || !vaultAccountData) {
-    return <div>Vault loading</div>;
+    return <div>Vault loading...</div>;
   }
 
   return (

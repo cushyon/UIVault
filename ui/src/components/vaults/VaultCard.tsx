@@ -16,8 +16,8 @@ const VaultInfoRow = ({
 }) => {
   return (
     <div className="flex justify-between">
-      <span className="text-sm text-gray-500 max-w-[200px]">{label}</span>
-      <span className="text-sm">{value}</span>
+      <span className="text-sm text-white max-w-[200px]">{label}</span>
+      <span className="text-sm text-right">{value}</span>
     </div>
   );
 };
@@ -30,6 +30,7 @@ export const VaultCard = ({
   vaultPubkey: string;
 }) => {
   const uiVaultConfig = getUiVaultConfig(vaultPubkey);
+  console.log("uiVaultConfig: ", uiVaultConfig);
   const spotMarketConfig = uiVaultConfig?.market ?? SPOT_MARKETS_LOOKUP[0];
 
   if (!uiVaultConfig) {
@@ -39,16 +40,20 @@ export const VaultCard = ({
   return (
     <div className="flex flex-col gap-1 p-4 border border-gray-200 rounded-md">
       <VaultInfoRow label="Vault Name" value={uiVaultConfig.name} />
+      <VaultInfoRow
+        label="Vault Description"
+        value={uiVaultConfig.description}
+      />
       <VaultInfoRow label="Vault Pubkey" value={vaultPubkey} />
       <VaultInfoRow
         label="Main Collateral"
         value={<MarketIcon marketSymbol={spotMarketConfig.symbol} />}
       />
-      <VaultInfoRow
+      {/* <VaultInfoRow
         label="APY (90D)"
         value={`${vaultStat.apys["90d"].toFixed(2)}%`}
-      />
-      <VaultInfoRow
+      /> */}
+      {/* <VaultInfoRow
         label="Base TVL"
         value={
           <div className="flex items-center gap-1">
@@ -57,19 +62,19 @@ export const VaultCard = ({
           </div>
         }
       />
-      <VaultInfoRow label="Quote TVL" value={vaultStat.tvlQuote.toNotional()} />
-      <VaultInfoRow
+      <VaultInfoRow label="Quote TVL" value={vaultStat.tvlQuote.toNotional()} /> */}
+      {/* <VaultInfoRow
         label="Capacity %"
         value={`${vaultStat.capacityPct.toFixed(2)}%`}
-      />
+      /> */}
       <VaultInfoRow
         label="Max Drawdown"
-        value={`${vaultStat.maxDrawdownPct}%`}
+        value={`${vaultStat.maxDrawdownPct.toFixed(2)}%`}
       />
-      <VaultInfoRow
+      {/* <VaultInfoRow
         label="30D Volume"
         value={vaultStat.volume30Days.toNotional()}
-      />
+      /> */}
       <Link href={`${PAGES.vaultsHome}/${vaultPubkey}`}>
         <Button className="w-full mt-2">View Vault</Button>
       </Link>

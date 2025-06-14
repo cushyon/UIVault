@@ -67,7 +67,7 @@ export const RollingNumber = ({
   height = 32,
   className,
   duration = 1,
-  fractionDuration = 0.8,
+  fractionDuration = duration * 0.6,
 }: {
   value: string | number;
   height?: number;

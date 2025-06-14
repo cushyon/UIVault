@@ -26,7 +26,7 @@ export const VaultStats = (props: {
       label: "APY",
       value: (
         <span className="flex items-end translate-y-[-2px]">
-          <RollingNumber value="18.02%" />
+          <RollingNumber duration={1.6} value="18.02%" />
         </span>
       ),
       //  `18.02%`, //`${apy?.toFixed(2)}%`,
@@ -39,7 +39,7 @@ export const VaultStats = (props: {
       label: "TVL",
       value: (
         <span className="flex items-end translate-y-[-2px]">
-          <RollingNumber value={tvlNumber} />
+          <RollingNumber duration={1.6} value={tvlNumber} />
           {tvlSuffix}
         </span>
       ),

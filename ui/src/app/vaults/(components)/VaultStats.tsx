@@ -10,6 +10,7 @@ export const VaultStats = (props: {
   depositAssetMarketIndex: number;
 }) => {
   const vaultStats = useAppStore((s) => s.vaultsStats[props.vaultPubkey]);
+  console.log("vaultStats: ", vaultStats);
   const isLoadingVaultStats = !vaultStats?.hasLoadedOnChainStats;
   const depositAssetConfig = UIMarket.createSpotMarket(
     props.depositAssetMarketIndex

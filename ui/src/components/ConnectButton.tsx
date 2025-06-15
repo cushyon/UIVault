@@ -4,7 +4,6 @@ import { useModalStore } from "@/stores/useModalStore";
 import { useCommonDriftStore } from "@drift-labs/react";
 import { COMMON_UI_UTILS } from "@drift/common";
 import { twMerge } from "tailwind-merge";
-
 import { Button } from "./ui/button";
 
 export default function ConnectButton({ className }: { className?: string }) {

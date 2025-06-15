@@ -28,8 +28,7 @@ export default function ConnectButton({ className }: { className?: string }) {
     >
       {!authority && (
         <>
-          <span>Connect to</span>
-          <Wallet size={24} />
+          <span>Connect</span>
         </>
       )}
 

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SiX, SiTelegram } from "react-icons/si";
-import Logo from "../../public/logo_white.svg";
+import { Logo } from "@/components/ui/logo";
+import Image from "next/image";
 
 export function Footer() {
   return (
@@ -9,7 +10,14 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-y-12 md:gap-0">
           <div className="md:col-span-6 flex flex-col gap-0">
             {/* 1️⃣ Logo — pull it left only (no translate-y) */}
-            <Logo size={280} className="-ml-14 translate-x-3 -translate-y-6" />
+            <Image
+              src="/logo_white.svg"
+              alt="Logo"
+              width={280}
+              height={280}
+              unoptimized
+              className="-ml-14 translate-x-3 -translate-y-6"
+            />
 
             {/* 2️⃣ Community block sits immediately below */}
             <div className="flex flex-col gap-3">

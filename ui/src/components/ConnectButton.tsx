@@ -1,7 +1,6 @@
 "use client";
 
 import { useModalStore } from "@/stores/useModalStore";
-import { Wallet } from "@drift-labs/icons";
 import { useCommonDriftStore } from "@drift-labs/react";
 import { COMMON_UI_UTILS } from "@drift/common";
 import { twMerge } from "tailwind-merge";

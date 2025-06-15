@@ -30,6 +30,7 @@ import {
   depositVault,
 } from "@/actions/vaults";
 import { Input } from "@/components/ui/input";
+import ConnectButton from "@/components/ConnectButton";
 
 type VaultDepositWithdrawFormProps = {
   uiVaultConfig: UiVaultConfig;
@@ -491,9 +492,7 @@ export const VaultDepositWithdrawForm = (
           {isDeposit ? "Confirm Deposit" : withdrawalCtaState.text}
         </Button>
       ) : (
-        <div className="flex items-center justify-center w-full">
-          Connect Wallet
-        </div>
+        <ConnectButton />
       )}
     </div>
   );

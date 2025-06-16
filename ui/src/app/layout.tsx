@@ -6,6 +6,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import { TopBar } from "@/components/TopBar";
 import FloatingUi from "@/components/modals/FloatingUi";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "",
@@ -52,7 +53,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body suppressHydrationWarning>
+      <body suppressHydrationWarning className="flex flex-col min-h-screen">
         <SuppressConsoleErrors />
 
         <AppWrapper>
@@ -60,7 +61,12 @@ export default function RootLayout({
           <div className="flex flex-col items-center w-full h-screen min-h-screen">
             <div className="max-w-[1200px] w-full h-full p-4 flex flex-col gap-4">
               <TopBar />
-              <div className="flex flex-col w-full pb-4 grow">{children}</div>
+              <main className="flex-1 flex flex-col items-center">
+                <div className="w-full max-w-[1200px] p-4 flex flex-col gap-4">
+                  {children}
+                </div>
+              </main>
+              <Footer />
             </div>
           </div>
 

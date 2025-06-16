@@ -44,7 +44,7 @@ export const TopBar = () => {
           height={80}
           priority
           alt="Cushion logo"
-          className="-translate-x-10"
+          className="-translate-x-7"
         />
       </Link>
       {/* <span className="text-2xl font-bold">Cushion</span> */}

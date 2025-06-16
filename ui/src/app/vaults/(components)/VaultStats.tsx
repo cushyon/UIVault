@@ -40,8 +40,8 @@ export const VaultStats = (props: {
       label: "TVL",
       value: (
         <span className="flex items-end translate-y-[-2px]">
-          <RollingNumber duration={1.6} value={tvlNumber} />
-          {tvlSuffix}
+          <RollingNumber duration={1.6} value={tvlNumber + tvlSuffix} />
+          {/* {tvlSuffix} */}
         </span>
       ),
       marketSymbol: depositAssetConfig.symbol,

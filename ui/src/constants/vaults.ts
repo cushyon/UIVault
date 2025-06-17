@@ -17,12 +17,12 @@ export type UiVaultConfig = {
 };
 
 const SOLCPPI: UiVaultConfig = {
-  name: "SOL CPPI (USDC)",
+  name: "SOL capital protected",
   vaultPubkeyString: "FTKm3WgS8K5AkDKL9UZnmD12JdhFnvxvNN1mF6adGXH9",
   managerPubkeyString: "CcfwPEzivuWSUYndGhL8XGw19s46fCaeB8e5nQBSzpEH",
   userPubKeyString: "2zSLRaFjF54daFxo1kciWYgtXcrNuKESPVhAaDuM5Qw4",
   description:
-    "60% capital guarantee and profit lock-in, invested in a risky asset (SOL) and USDC",
+    "60% capital guarantee and profit lock-in, invested in SOL and rebalancing to USDC",
   market: SPOT_MARKETS_LOOKUP[0],
   isNotionalGrowthStrategy: false,
 };

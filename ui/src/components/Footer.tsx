@@ -41,7 +41,10 @@ export function Footer() {
             <h3 className="text-xl font-medium mb-6">Resources</h3>
             <ul className="space-y-4">
               <li>
-                <Link href="#" className="hover:underline">
+                <Link
+                  href="https://cushion-1.gitbook.io/cushion"
+                  className="hover:underline"
+                >
                   Documentation
                 </Link>
               </li>
@@ -53,11 +56,11 @@ export function Footer() {
                   Github
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="#" className="hover:underline">
                   Media Kit
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
           <div className="md:col-span-3">
@@ -71,7 +74,7 @@ export function Footer() {
                   Contact us
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link href="#" className="hover:underline">
                   Term of use
                 </Link>
@@ -80,7 +83,7 @@ export function Footer() {
                 <Link href="#" className="hover:underline">
                   Privacy policy
                 </Link>
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>

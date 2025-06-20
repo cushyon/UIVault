@@ -197,7 +197,7 @@ export const VaultHistoryGraph = (props: {
   if (isLoading) return null;
 
   return (
-    <div className="w-full h-full min-h-[266px] mt-4 flex flex-col gap-2">
+    <div className="w-full min-w-0 overflow-x-auto h-full min-h-[266px] mt-4 flex flex-col gap-2">
       <ResponsiveContainer width={"100%"} className="flex-grow h-20">
         <AreaChart data={displayedData}>
           <CartesianGrid stroke={"var(--stroke-secondary)"} />

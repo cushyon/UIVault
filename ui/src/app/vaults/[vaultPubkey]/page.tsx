@@ -7,6 +7,7 @@ import { VaultPerformance } from "../(components)/VaultPerformance";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { UserPerformance } from "../(components)/UserPerformance";
 import { VaultDepositWithdrawForm } from "../(components)/VaultDepositWithdrawForm";
+import useAppStore from "@/stores/app/useAppStore";
 
 type ContentTab = "VaultPerformance" | "UserPerformance" | "Overview";
 
@@ -29,6 +30,7 @@ export default function VaultPage(props: {
   const params = use(props.params);
   const vaultPubkey = params.vaultPubkey;
   const uiVaultConfig = getUiVaultConfig(vaultPubkey);
+  //const vaultStats = useAppStore((s) => s.vaultsStats[vaultPubkey]);
 
   const [activeTab, setActiveTab] = useState<ContentTab>(
     CONTENT_TAB_OPTIONS[0].value
@@ -40,9 +42,14 @@ export default function VaultPage(props: {
     isVaultDepositorLoaded,
     syncVaultStats,
   } = useVault(vaultPubkey);
+  //console.log("vaultStats: ", vaultStats);
 
-  if (!uiVaultConfig || !vaultAccountData) {
-    return <div>Vault loading...</div>;
+  if (
+    !uiVaultConfig ||
+    !vaultAccountData //||
+    //!vaultStats?.hasLoadedOnChainStats
+  ) {
+    return <div>Vault loading...BBB</div>;
   }
 
   return (
@@ -65,7 +72,7 @@ export default function VaultPage(props: {
         </ToggleGroup>
       </div>
 
-      <div className="flex w-full gap-6 mt-4">
+      <div className="flex flex-col md:flex-row w-full gap-6 mt-4">
         {activeTab === "VaultPerformance" && (
           <VaultPerformance uiVaultConfig={uiVaultConfig} />
         )}
@@ -78,13 +85,15 @@ export default function VaultPage(props: {
             isVaultDepositorLoaded={isVaultDepositorLoaded}
           />
         )}
-        <VaultDepositWithdrawForm
-          uiVaultConfig={uiVaultConfig}
-          vaultDepositorAccountData={vaultDepositorAccountData}
-          isVaultDepositorLoaded={isVaultDepositorLoaded}
-          vaultAccountData={vaultAccountData}
-          syncVaultStats={syncVaultStats}
-        />
+        <div className="w-full md:max-w-[400px]">
+          <VaultDepositWithdrawForm
+            uiVaultConfig={uiVaultConfig}
+            vaultDepositorAccountData={vaultDepositorAccountData}
+            isVaultDepositorLoaded={isVaultDepositorLoaded}
+            vaultAccountData={vaultAccountData}
+            syncVaultStats={syncVaultStats}
+          />
+        </div>
       </div>
     </div>
   );

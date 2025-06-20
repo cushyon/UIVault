@@ -16,7 +16,7 @@ export const VaultStats = (props: {
     props.depositAssetMarketIndex
   ).market;
 
-  const apy = vaultStats?.apys[DEFAULT_PERIOD_APY] ?? 0;
+  //const apy = vaultStats?.apys[DEFAULT_PERIOD_APY] ?? 0;
 
   const tvlString = vaultStats ? vaultStats.tvlBase.toMillified() : "0";
   const [, tvlNumber = "0", tvlSuffix = ""] =
@@ -27,13 +27,12 @@ export const VaultStats = (props: {
       label: "APY",
       value: (
         <span className="flex items-end translate-y-[-2px]">
-          <RollingNumber duration={1.6} value="18.02%" />
+          <RollingNumber duration={1.6} value="14.02%" />
         </span>
       ),
       //  `18.02%`, //`${apy?.toFixed(2)}%`,
-      valueClassName: twMerge(
-        apy < 0 ? "text-negative-red" : "text-positive-green"
-      ),
+      valueClassName: twMerge(),
+      //apy < 0 ? "text-negative-red" : "text-positive-green"
       loading: isLoadingVaultStats,
     },
     {

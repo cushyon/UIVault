@@ -49,7 +49,7 @@ export default function VaultPage(props: {
     !vaultAccountData //||
     //!vaultStats?.hasLoadedOnChainStats
   ) {
-    return <div>Vault loading...BBB</div>;
+    return <div>Vault loading...</div>;
   }
 
   return (

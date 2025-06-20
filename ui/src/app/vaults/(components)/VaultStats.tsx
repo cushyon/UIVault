@@ -33,7 +33,7 @@ export const VaultStats = (props: {
       //  `18.02%`, //`${apy?.toFixed(2)}%`,
       valueClassName: twMerge(),
       //apy < 0 ? "text-negative-red" : "text-positive-green"
-      loading: isLoadingVaultStats,
+      loading: false,
     },
     {
       label: "TVL",

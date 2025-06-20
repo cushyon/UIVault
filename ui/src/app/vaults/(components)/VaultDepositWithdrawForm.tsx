@@ -365,8 +365,8 @@ export const VaultDepositWithdrawForm = (
           className={twMerge(
             "flex-1 py-3 px-4 rounded-full text-lg font-medium transition-colors",
             formType === "deposit"
-              ? "bg-[#3a4154] text-gray-200"
-              : "bg-[#2a3142] text-gray-400 hover:text-gray-300"
+              ? "!bg-[#475569] !text-gray-200"
+              : "!bg-[#2a3142] !text-gray-400 hover: !text-gray-300"
           )}
         >
           Deposit
@@ -376,8 +376,8 @@ export const VaultDepositWithdrawForm = (
           className={twMerge(
             "flex-1 py-3 px-4 rounded-full text-lg font-medium transition-colors",
             formType === "withdraw"
-              ? "bg-[#3a4154] text-gray-200"
-              : "bg-[#2a3142] text-gray-400 hover:text-gray-300"
+              ? "!bg-[#475569] !text-gray-200"
+              : "!bg-[#2a3142] !text-gray-400 hover: !text-gray-300"
           )}
         >
           Withdraw

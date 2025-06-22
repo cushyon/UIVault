@@ -27,7 +27,7 @@ export const VaultStats = (props: {
       label: "APY",
       value: (
         <span className="flex items-end translate-y-[-2px]">
-          <RollingNumber duration={1.6} value="11.04%" />
+          <RollingNumber duration={1.6} value="-4.14%" />
         </span>
       ),
       //  `18.02%`, //`${apy?.toFixed(2)}%`,

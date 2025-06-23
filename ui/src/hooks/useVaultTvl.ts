@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { ApyReturnsLookup } from "@/types/vaults";
 
-// const API_URL = "http://localhost:4000/api/get-apy/cmav852gx0000w8cmlqa6yben";
-
 const API_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL +
-  "/api/get-apy/cmav852gx0000w8cmlqa6yben";
+  "/api/get-tvl/cmav852gx0000w8cmlqa6yben";
 
-export const useVaultApy = (vaultPubkey: string) => {
+export const useVaultTvl = (vaultPubkey: string) => {
   const { data, isLoading } = useQuery<ApyReturnsLookup>({
-    queryKey: ["vault-apy", vaultPubkey],
+    queryKey: ["vault-tvl", vaultPubkey],
     queryFn: async () => {
       console.log("API_URL: ", API_URL);
       const res = await fetch(API_URL);
@@ -17,14 +15,14 @@ export const useVaultApy = (vaultPubkey: string) => {
       console.log("res: ", res);
       return res.json();
     },
-    refetchInterval: 1000, // 1 second
+    refetchInterval: 5000, // 5 seconds
     enabled: !!vaultPubkey,
   });
 
   console.log("data: ", data);
 
   // @ts-ignore
-  const apy: number | null = data?.data?.apy ?? null;
+  const tvl: number | null = data?.tvl ?? null;
 
-  return { apy, isLoading };
+  return { tvl, isLoading };
 };

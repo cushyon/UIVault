@@ -29,7 +29,7 @@ export const VaultStats = (props: {
 
   const stats = [
     {
-      label: "APY",
+      label: "Performance (APY)",
       value: (
         <span className="flex items-end translate-y-[-2px]">
           {isApyLoading ? (

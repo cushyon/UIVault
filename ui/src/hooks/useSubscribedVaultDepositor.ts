@@ -13,7 +13,7 @@ import { PublicKey } from "@drift-labs/sdk";
  * Subscribed to changes in the vault depositor account.
  */
 export const useSubscribedVaultDepositor = (
-  vaultPubkey?: string,
+  vaultPubkey?: string
 ): {
   vaultDepositorAccountData: VaultDepositor | undefined;
   isLoaded: boolean;
@@ -39,6 +39,11 @@ export const useSubscribedVaultDepositor = (
   }, [authority]);
 
   useEffect(() => {
+    console.log("Entering useEffect in useSubscribedVaultDepositor");
+    console.log("vaultPubkey: ", vaultPubkey);
+    console.log("authority: ", authority);
+    console.log("bulkAccountLoader: ", bulkAccountLoader);
+    console.log("connection: ", connection);
     if (!vaultPubkey || !authority || !bulkAccountLoader || !connection) return;
 
     setIsLoaded(false);
@@ -51,13 +56,15 @@ export const useSubscribedVaultDepositor = (
   }, [vaultPubkey, authority, bulkAccountLoader, connection]);
 
   async function syncVaultDepositorAccountAndData() {
+    console.log("Entering syncVaultDepositorAccountAndData");
     if (!vaultPubkey || !authority || !bulkAccountLoader || !connection) return;
 
     const vaultDepositorPubkey = VaultDepositorAccount.getAddressSync(
       VAULT_PROGRAM_ID,
       new PublicKey(vaultPubkey),
-      authority,
+      authority
     );
+    console.log("vaultDepositorPubkey: ", vaultDepositorPubkey);
     const newWallet =
       COMMON_UI_UTILS.createThrowawayIWallet(vaultDepositorPubkey);
     const driftVaultsProgram = getDriftVaultProgram(connection, newWallet);
@@ -65,7 +72,7 @@ export const useSubscribedVaultDepositor = (
     const vaultDepositorAccount = new VaultDepositorAccount(
       driftVaultsProgram,
       vaultDepositorPubkey,
-      bulkAccountLoader,
+      bulkAccountLoader
     );
     vaultDepositorAccountRef.current = vaultDepositorAccount;
 
@@ -85,7 +92,7 @@ export const useSubscribedVaultDepositor = (
         "vaultDepositorUpdate",
         (newVaultDepositorData) => {
           setVaultDepositorAccountData(newVaultDepositorData);
-        },
+        }
       );
     }
   }

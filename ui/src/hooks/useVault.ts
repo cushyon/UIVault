@@ -24,21 +24,27 @@ export const useVault = (vaultPubkey: string) => {
   const vaultClient = useAppStore((s) => s.vaultClient);
   const setAppStore = useAppStore((s) => s.set);
   const getOraclePriceForMarket = useOraclePriceStore(
-    (s) => s.getMarketPriceData,
+    (s) => s.getMarketPriceData
   );
 
   const oraclePriceData = getOraclePriceForMarket(
-    new MarketId(uiVaultConfig?.market.marketIndex ?? 0, MarketType.SPOT),
+    new MarketId(uiVaultConfig?.market.marketIndex ?? 0, MarketType.SPOT)
   );
   const memoizedOraclePriceGetter = useCallback(
     (_marketId: MarketId) => oraclePriceData,
-    [oraclePriceData?.priceData.price],
+    [oraclePriceData?.priceData.price]
   );
 
   const apyReturnsLookup = useVaultsApyReturnsLookup();
   const { vaultAccountData, vaultAccount } = useSubscribedVault(vaultPubkey);
   const { vaultDepositorAccountData, isLoaded: isVaultDepositorLoaded } =
     useSubscribedVaultDepositor(vaultPubkey);
+
+  console.log(
+    "vaultDepositorAccountData: ",
+    isVaultDepositorLoaded,
+    vaultDepositorAccountData
+  );
 
   const syncVaultStats = useCallback(async () => {
     if (
@@ -53,7 +59,7 @@ export const useVault = (vaultPubkey: string) => {
         vaultClient,
         new PublicKey(vaultPubkey),
         apyReturnsLookup[vaultPubkey],
-        memoizedOraclePriceGetter,
+        memoizedOraclePriceGetter
       );
       setAppStore((s) => {
         s.vaultsStats[vaultPubkey] = vaultStats;

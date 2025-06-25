@@ -18,7 +18,8 @@ import { Alert } from "@/components/ui/alert";
 import dayjs from "dayjs";
 import { getVaultDepositorBalance } from "@/lib/vault";
 import { MarketIcon } from "@/components/MarketIcon";
-import { Typo, useCommonDriftStore, useWallet } from "@drift-labs/react";
+import { Typo, useCommonDriftStore } from "@drift-labs/react";
+import { useWallet } from "@jup-ag/wallet-adapter";
 import { Button } from "@/components/ui/button";
 import { UiVaultConfig } from "@/constants/vaults";
 import useAppStore from "@/stores/app/useAppStore";
@@ -51,6 +52,7 @@ export const VaultDepositWithdrawForm = (
   const vaultClient = useAppStore((s) => s.vaultClient);
   const driftClient = useCommonDriftStore((s) => s.driftClient.client);
   const isWalletConnected = useWallet()?.connected;
+  console.log("isWalletConnected: ", isWalletConnected);
   const syncVaultStats = props.syncVaultStats;
 
   const [formType, setFormType] = useState<"deposit" | "withdraw">("deposit");
@@ -62,7 +64,8 @@ export const VaultDepositWithdrawForm = (
   const redemptionPeriod = props.vaultAccountData?.redeemPeriod;
 
   const currentUserVaultBaseBalanceAfterFees = getCurrentUserVaultBalance();
-  const afterInputAmountUserVaultBalance = getAfterInputAmountUserVaultBalance();
+  const afterInputAmountUserVaultBalance =
+    getAfterInputAmountUserVaultBalance();
   const maxAmount = getMaxAmount();
   const { withdrawalState } = getWithdrawalState(
     props.vaultDepositorAccountData,
@@ -70,7 +73,8 @@ export const VaultDepositWithdrawForm = (
   );
 
   const isVaultDepositorWhitelisted = getIsVaultDepositorWhitelisted();
-  const isInputAmountLessThanMinDepositAmount = getIsInputAmountLessThanMinDepositAmount();
+  const isInputAmountLessThanMinDepositAmount =
+    getIsInputAmountLessThanMinDepositAmount();
   const isCtaDisabled = getIsCtaDisabled();
   const withdrawalCtaState = getWithdrawalFormState();
   const withdrawalBaseAmount = getWithdrawalBaseAmount();
@@ -118,8 +122,16 @@ export const VaultDepositWithdrawForm = (
 
   function getMaxAmount() {
     if (isDeposit) {
-      if (!props.vaultAccountData || !vaultStats)
+      console.log("props.vaultAccountData: ", props.vaultAccountData);
+      console.log(
+        "vaultDepositorAccountData: ",
+        props.vaultDepositorAccountData
+      );
+      console.log("vaultStats: ", vaultStats);
+      if (!props.vaultAccountData || !vaultStats) {
+        console.log("getMaxAmount returning 0");
         return BigNum.from(0, depositAssetConfig.precisionExp);
+      }
 
       // 99.99% of the capacity to allow for tvlBase fluctuations - for UX improvements where user can fail regularly when attempting to deposit the exact leftover amount
       const bufferedCapacity = props.vaultAccountData.maxTokens
@@ -200,9 +212,10 @@ export const VaultDepositWithdrawForm = (
       }
 
       const totalShares = props.vaultAccountData.totalShares;
-      const currentBaseValueOfRequest = props.vaultDepositorAccountData.lastWithdrawRequest.shares
-        .mul(vaultStats.tvlBase.val)
-        .div(totalShares);
+      const currentBaseValueOfRequest =
+        props.vaultDepositorAccountData.lastWithdrawRequest.shares
+          .mul(vaultStats.tvlBase.val)
+          .div(totalShares);
 
       const baseValueOfWithdrawalAtRequestTime = new BN(
         props.vaultDepositorAccountData.lastWithdrawRequest.value
@@ -407,7 +420,7 @@ export const VaultDepositWithdrawForm = (
         {(isDeposit || withdrawalCtaState.displayInput) && (
           <div className="flex flex-col gap-2">
             <div
-              className="flex items-center justify-between w-full"
+              className="flex justify-between items-center w-full"
               onClick={() => {
                 handleOnValueChange(maxAmount.toNum().toString());
               }}
@@ -417,7 +430,7 @@ export const VaultDepositWithdrawForm = (
               {isWalletConnected && (
                 <div className="flex items-center gap-1 bg-[#2a3142] rounded-sm">
                   {/* The maximum amount is after fees, while the final amount received may differ from the amount requested. */}
-                  <Typo.T5 className="flex items-center gap-1 px-1 rounded-sm cursor-pointer bg-button-secondary-bg text-text-secondary text-gray-200">
+                  <Typo.T5 className="flex gap-1 items-center px-1 text-gray-200 rounded-sm cursor-pointer bg-button-secondary-bg text-text-secondary">
                     <span>Max:</span>
                     <span>
                       {maxAmount.prettyPrint()} {depositAssetConfig.symbol}
@@ -427,10 +440,10 @@ export const VaultDepositWithdrawForm = (
               )}
             </div>
 
-            <div className="flex items-center w-full gap-2 bg-input-bg">
+            <div className="flex gap-2 items-center w-full bg-input-bg">
               {/** Collateral Selector */}
-              <div className="flex items-center w-full gap-2 ">
-                <div className="flex items-center gap-1 shrink-0">
+              <div className="flex gap-2 items-center w-full">
+                <div className="flex gap-1 items-center shrink-0">
                   <MarketIcon
                     marketSymbol={depositAssetConfig.symbol}
                     className="w-4 h-4"
@@ -451,11 +464,11 @@ export const VaultDepositWithdrawForm = (
         )}
 
         <div className="flex flex-col gap-4 mt-1">
-          <div className="flex items-center gap-1">
-            <div className="flex items-center justify-between w-full gap-1">
+          <div className="flex gap-1 items-center">
+            <div className="flex gap-1 justify-between items-center w-full">
               <span>Balance</span>
 
-              <div className="flex items-center gap-1">
+              <div className="flex gap-1 items-center">
                 <MarketIcon
                   marketSymbol={depositAssetConfig.symbol}
                   className="w-4 h-4"

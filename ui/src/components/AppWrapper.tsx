@@ -10,10 +10,12 @@ import {
   useHandleBadRpc,
   useSyncOraclePriceStore,
 } from "@drift-labs/react";
-import { WalletContext, WalletProvider } from "@solana/wallet-adapter-react";
+// import { WalletContext, WalletProvider } from "@solana/wallet-adapter-react";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import UnifiedWallet from "./UnifiedWallet";
+import { WalletContext } from "@jup-ag/wallet-adapter";
 
 import useSyncWalletToStore from "@/hooks/useSyncWalletToStore";
 
@@ -70,7 +72,8 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <WalletProvider wallets={[]} autoConnect>
+      {/* <WalletProvider wallets={[]} autoConnect> */}
+      <UnifiedWallet>
         <DriftProvider
           // @ts-ignore
           walletContext={WalletContext}
@@ -84,7 +87,8 @@ const AppWrapper = ({ children }: { children: React.ReactNode }) => {
         >
           <AppSetup>{children}</AppSetup>
         </DriftProvider>
-      </WalletProvider>
+      </UnifiedWallet>
+      {/* </WalletProvider> */}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

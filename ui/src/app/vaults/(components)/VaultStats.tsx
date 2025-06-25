@@ -24,8 +24,8 @@ export const VaultStats = (props: {
   const [, tvlNumber = "0", tvlSuffix = ""] =
     tvlString.match(/([\d.]+)(.*)/) ?? [];
 
-  console.log("tvlNumber: ", tvlNumber);
-  console.log("tvlSuffix: ", tvlSuffix);
+  // console.log("tvlNumber: ", tvlNumber);
+  // console.log("tvlSuffix: ", tvlSuffix);
 
   const stats = [
     {

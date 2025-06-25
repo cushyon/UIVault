@@ -6,6 +6,7 @@ import { DEFAULT_PERIOD_APY } from "@/constants/misc";
 import { RollingNumber } from "../../../components/ui/rolling-number";
 import { useVaultApy } from "@/hooks/useVaultApy";
 import { useVaultTvl } from "@/hooks/useVaultTvl";
+import { useMemo } from "react";
 
 export const VaultStats = (props: {
   vaultPubkey: string;
@@ -17,10 +18,19 @@ export const VaultStats = (props: {
     props.depositAssetMarketIndex
   ).market;
 
+  const formatter = useMemo(
+    () =>
+      new Intl.NumberFormat("en", {
+        notation: "compact",
+        maximumFractionDigits: 2,
+      }),
+    []
+  );
+
   const { apy, isLoading: isApyLoading } = useVaultApy(props.vaultPubkey);
   const { tvl, isLoading: isTvlLoading } = useVaultTvl(props.vaultPubkey);
 
-  const tvlString = tvl ? tvl.toFixed(0) : "0";
+  const tvlString = tvl ? formatter.format(tvl) : "0";
   const [, tvlNumber = "0", tvlSuffix = ""] =
     tvlString.match(/([\d.]+)(.*)/) ?? [];
 

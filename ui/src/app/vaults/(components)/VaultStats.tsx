@@ -68,6 +68,11 @@ export const VaultStats = (props: {
       marketSymbol: depositAssetConfig.symbol,
       loading: isTvlLoading,
     },
+    {
+      label: "Rebalancing",
+      value: <span className="flex items-end translate-y-[-2px]">1 Day</span>,
+      loading: isTvlLoading,
+    },
     // {
     //   label: "Capacity",
     //   value: vaultStats?.isUncappedCapacity

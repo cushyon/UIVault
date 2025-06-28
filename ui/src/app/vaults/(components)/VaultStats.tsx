@@ -69,6 +69,11 @@ export const VaultStats = (props: {
       loading: isTvlLoading,
     },
     {
+      label: "Protection floor",
+      value: <span className="flex items-end translate-y-[-2px]">60 %</span>,
+      loading: isTvlLoading,
+    },
+    {
       label: "Rebalancing",
       value: <span className="flex items-end translate-y-[-2px]">1 Day</span>,
       loading: isTvlLoading,

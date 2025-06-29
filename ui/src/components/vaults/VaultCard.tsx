@@ -48,40 +48,34 @@ export const VaultCard = ({
   return (
     <div
       className="
-            relative
-            mx-auto
-            flex flex-wrap
-            items-end content-end
-            w-[785px]      
-            gap-y-[21px] gap-x-[102px]
-            rounded-[40px]            
-            bg-[#282E3E]             
-            px-[28px] pt-[30px] pb-[40px]
-            shadow-lg"
+      relative
+      mx-auto          /*  keeps the card centered  */
+      flex flex-wrap items-end content-end
+      w-[600px]        /*  narrower than before     */
+      gap-y-6 gap-x-16 /*  tighter gaps             */
+      rounded-[40px] bg-[#282E3E]
+      px-7 pt-8 pb-10  /*  scaled padding            */
+      shadow-lg
+    "
     >
-      {/* === Header block (icon + text + pill) ============================ */}
-      <div
-        className="
-          flex flex-col items-end gap-[40px] w-full
-        "
-      >
-        {/* first row: icon + title/link/tagline */}
+      {/* === Header block =============================================== */}
+      <div className="flex flex-col items-end gap-10 w-full">
+        {/* first row: icon + title/link/tagline -------------------------- */}
         <div className="flex items-start justify-between w-full">
-          <div className="flex items-center gap-4 ">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#273041] self-start mt-2.5">
+          <div className="flex items-center gap-4">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#273041] mt-2.5">
               <MarketIcon
                 marketSymbol={spotMarketConfig.symbol}
                 className="h-14 w-14"
               />
             </div>
 
-            {/* text block --------------------------------------------------- */}
-            <div className="flex flex-col gap-[24px]">
+            <div className="flex flex-col gap-6">
               <div className="flex flex-col">
-                <h3 className="text-[32px] font-semibold text-white leading-[52px]">
+                <h3 className="text-[28px] font-semibold text-white leading-[42px]">
                   {name}
                 </h3>
-                <p className="w-[400px] text-[#94A3B8] text-[16px] leading-[30px] font-bold">
+                <p className="max-w-[320px] text-[#94A3B8] text-[15px] leading-[28px] font-bold">
                   Cushion portfolio protection strategy
                 </p>
               </div>
@@ -90,19 +84,19 @@ export const VaultCard = ({
             </div>
           </div>
 
-          {/* performance pill ---------------------------------------------- */}
-          <div className="flex flex-col items-start gap-[10px] rounded-[20px] bg-[#191818] px-[20px] py-[8px]">
+          {/* performance pill -------------------------------------------- */}
+          <div className="flex flex-col items-start gap-2.5 rounded-[20px] bg-[#191818] px-5 py-2">
             <p className="text-[10px] font-medium uppercase tracking-wide text-slate-400">
               Performance&nbsp;(90d)
             </p>
             <p className="text-xl font-semibold text-white">
-              14.2{/*apy90d*/} %
+              {/*{apy90d}*/}14.2&nbsp;%
             </p>
           </div>
         </div>
 
-        {/* === Key stats row === */}
-        <div className="flex items-start gap-x-[102px] text-left w-full">
+        {/* === Key stats row ============================================ */}
+        <div className="flex items-start gap-x-16 w-full">
           <div>
             <p className="text-[10px] uppercase tracking-wider text-slate-400">
               Current TVL
@@ -137,12 +131,12 @@ export const VaultCard = ({
                 marketSymbol={spotMarketConfig.symbol}
                 className="w-6 h-6"
               />
-              <MarketIcon marketSymbol={"SOL"} className="w-6 h-6" />
+              <MarketIcon marketSymbol="SOL" className="w-6 h-6" />
             </p>
           </div>
         </div>
 
-        {/* === CTA === */}
+        {/* === CTA ======================================================= */}
         <Link
           href={`${PAGES.vaultsHome}/${vaultPubkey}`}
           className="w-full block"
@@ -152,47 +146,4 @@ export const VaultCard = ({
       </div>
     </div>
   );
-
-  //   <div className="flex flex-col gap-1 p-4 border border-gray-200 rounded-md">
-  //     <VaultInfoRow label="Vault Name" value={uiVaultConfig.name} />
-  //     <VaultInfoRow
-  //       label="Vault Description"
-  //       value={uiVaultConfig.description}
-  //     />
-  //     <VaultInfoRow label="Vault Pubkey" value={vaultPubkey} />
-  //     <VaultInfoRow
-  //       label="Main Collateral"
-  //       value={<MarketIcon marketSymbol={spotMarketConfig.symbol} />}
-  //     />
-  //     {/* <VaultInfoRow
-  //       label="APY (90D)"
-  //       value={`${vaultStat.apys["90d"].toFixed(2)}%`}
-  //     /> */}
-  //     {/* <VaultInfoRow
-  //       label="Base TVL"
-  //       value={
-  //         <div className="flex items-center gap-1">
-  //           <span>{vaultStat.tvlBase.toNum()}</span>
-  //           <MarketIcon marketSymbol={spotMarketConfig.symbol} />
-  //         </div>
-  //       }
-  //     />
-  //     <VaultInfoRow label="Quote TVL" value={vaultStat.tvlQuote.toNotional()} /> */}
-  //     {/* <VaultInfoRow
-  //       label="Capacity %"
-  //       value={`${vaultStat.capacityPct.toFixed(2)}%`}
-  //     /> */}
-  //     <VaultInfoRow
-  //       label="Max Drawdown"
-  //       value={`${vaultStat.maxDrawdownPct.toFixed(2)}%`}
-  //     />
-  //     {/* <VaultInfoRow
-  //       label="30D Volume"
-  //       value={vaultStat.volume30Days.toNotional()}
-  //     /> */}
-  //     <Link href={`${PAGES.vaultsHome}/${vaultPubkey}`}>
-  //       <Button className="w-full mt-2">View Vault</Button>
-  //     </Link>
-  //   </div>
-  // );
 };

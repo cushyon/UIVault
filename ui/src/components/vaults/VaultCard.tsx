@@ -6,6 +6,9 @@ import Link from "next/link";
 import { PAGES } from "@/constants/pages";
 import { getUiVaultConfig } from "@/lib/utils";
 import { VaultStats } from "@/types/vaults";
+import { useVaultApy } from "@/hooks/useVaultApy";
+import { useVaultTvl } from "@/hooks/useVaultTvl";
+import { useMemo } from "react";
 
 // const VaultInfoRow = ({
 //   label,
@@ -29,7 +32,21 @@ export const VaultCard = ({
   vaultStat: VaultStats;
   vaultPubkey: string;
 }) => {
+  const formatter = useMemo(
+    () =>
+      new Intl.NumberFormat("en", {
+        notation: "compact",
+        maximumFractionDigits: 2,
+      }),
+    []
+  );
+
   const uiVaultConfig = getUiVaultConfig(vaultPubkey);
+  const { apy, isLoading: isApyLoading } = useVaultApy(vaultPubkey);
+  const { tvl, isLoading: isTvlLoading } = useVaultTvl(vaultPubkey);
+  const tvlString = tvl ? formatter.format(tvl) : "0";
+  const [, tvlNumber = "0", tvlSuffix = ""] =
+    tvlString.match(/([\d.]+)(.*)/) ?? [];
   console.log("uiVaultConfig: ", uiVaultConfig);
   console.log("vaultStat: ", vaultStat);
   const { name, description } = uiVaultConfig ?? {
@@ -38,8 +55,8 @@ export const VaultCard = ({
   };
   const spotMarketConfig = uiVaultConfig?.market ?? SPOT_MARKETS_LOOKUP[0];
 
-  const tvlBase = vaultStat.tvlBase.toNum();
-  const apy90d = vaultStat.apys["90d"].toFixed(2);
+  // const tvlBase = vaultStat.tvlBase.toNum();
+  // const apy90d = vaultStat.apys["90d"].toFixed(2);
 
   if (!uiVaultConfig) {
     return null;
@@ -90,7 +107,8 @@ export const VaultCard = ({
               Performance&nbsp;(90d)
             </p>
             <p className="text-xl font-semibold text-white">
-              {/*{apy90d}*/}14.2&nbsp;%
+              {/* {apy90d}14.2&nbsp;% */}
+              {apy !== null ? `${apy.toFixed(2)}%` : "-"}
             </p>
           </div>
         </div>
@@ -102,10 +120,10 @@ export const VaultCard = ({
               Current TVL
             </p>
             <p className="text-[24px] font-semibold text-[#E2E8F0] leading-[36px]">
-              $
-              {tvlBase >= 1000
+              {tvl !== null ? `$${tvlNumber + tvlSuffix}` : "-"}
+              {/* {tvlBase >= 1000
                 ? `${(tvlBase / 1000).toFixed(2)}K`
-                : tvlBase.toLocaleString()}
+                : tvlBase.toLocaleString()} */}
             </p>
           </div>
 

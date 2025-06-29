@@ -49,12 +49,12 @@ export const VaultCard = ({
     <div
       className="
       relative
-      mx-auto          /*  keeps the card centered  */
+      mx-auto
       flex flex-wrap items-end content-end
-      w-[600px]        /*  narrower than before     */
-      gap-y-6 gap-x-16 /*  tighter gaps             */
+      w-[600px]
+      gap-y-6 gap-x-16 
       rounded-[40px] bg-[#282E3E]
-      px-7 pt-8 pb-10  /*  scaled padding            */
+      px-7 pt-8 pb-10
       shadow-lg
     "
     >
@@ -63,7 +63,7 @@ export const VaultCard = ({
         {/* first row: icon + title/link/tagline -------------------------- */}
         <div className="flex items-start justify-between w-full">
           <div className="flex items-center gap-4">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#273041] mt-2.5">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#273041] self-start mt-2.5">
               <MarketIcon
                 marketSymbol={spotMarketConfig.symbol}
                 className="h-14 w-14"
